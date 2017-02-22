@@ -28,6 +28,10 @@ public class FacultyService {
         return facultyRepository.findByName(name);
     }
 
+    public List<Faculty> findByIsAvailable(boolean isAvailable) {
+        return facultyRepository.findByIsAvailable(isAvailable);
+    }
+
     public List<Faculty> findBySubjects(Set<Subject> subjects) {
         return facultyRepository.findBySubjects(subjects);
     }
