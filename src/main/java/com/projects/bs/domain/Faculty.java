@@ -1,10 +1,13 @@
 package com.projects.bs.domain;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
 
 @Entity
+@Data
 public class Faculty implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -22,6 +25,9 @@ public class Faculty implements Serializable {
 
     @Column(name = "recruitment_plan")
     private int recruitmentPlan;
+
+    @Column(name = "is_available")
+    private boolean isAvailable;
 
     @ManyToMany
     @JoinTable(
