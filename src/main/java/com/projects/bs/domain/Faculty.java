@@ -6,8 +6,9 @@ import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
 
-@Entity
 @Data
+@Entity
+@Table(indexes = @Index(columnList = "name", unique = true))
 public class Faculty implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -15,19 +16,19 @@ public class Faculty implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "info")
+    @Column(name = "info", length = 1000)
     private String info;
 
-    @Column(name = "passing_score")
+    @Column(name = "passing_score", nullable = false)
     private int passingScore;
 
-    @Column(name = "recruitment_plan")
+    @Column(name = "recruitment_plan", nullable = false)
     private int recruitmentPlan;
 
-    @Column(name = "is_available")
+    @Column(name = "is_available", nullable = false)
     private boolean isAvailable;
 
     @ManyToMany

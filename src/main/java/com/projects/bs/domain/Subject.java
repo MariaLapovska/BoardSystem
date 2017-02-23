@@ -5,8 +5,9 @@ import lombok.Data;
 import java.io.Serializable;
 import javax.persistence.*;
 
-@Entity
 @Data
+@Entity
+@Table(indexes = @Index(columnList = "name", unique = true))
 public class Subject implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -14,6 +15,6 @@ public class Subject implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 }
