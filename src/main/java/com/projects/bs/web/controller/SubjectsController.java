@@ -1,4 +1,4 @@
-package com.projects.bs.controller;
+package com.projects.bs.web.controller;
 
 import com.projects.bs.domain.Subject;
 import com.projects.bs.service.SubjectService;
@@ -31,19 +31,19 @@ public class SubjectsController {
     }
 
     @PostMapping
-    public Subject addSubject(@Valid Subject subject) {
-        subjectService.saveSubject(subject);
-        return subject;
+    public Subject addSubject(@Valid @RequestBody Subject subject) {
+        return subjectService.saveSubject(subject);
     }
 
     @PutMapping("{id}")
-    public Subject editSubject(@PathVariable int id, @Valid Subject subject) {
-        subjectService.saveSubject(subject);
-        return subject;
+    public Subject editSubject(@PathVariable long id, @Valid @RequestBody Subject subject) {
+        Subject old = subjectService.findOne(id);
+        old.setName(subject.getName());
+        return subjectService.saveSubject(old);
     }
 
     @DeleteMapping("{id}")
-    public void deleteSubject(@PathVariable int id) {
+    public void deleteSubject(@PathVariable long id) {
         subjectService.delete(id);
     }
 }
