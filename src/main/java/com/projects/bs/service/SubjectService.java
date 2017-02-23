@@ -23,8 +23,8 @@ public class SubjectService {
         return subjectRepository.findByName(name);
     }
 
-    public void saveSubject(Subject subject) {
-        subjectRepository.save(subject);
+    public Subject saveSubject(Subject subject) {
+        return subjectRepository.save(subject);
     }
 
     public Subject findOne(long id) {

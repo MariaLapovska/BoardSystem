@@ -36,8 +36,8 @@ public class FacultyService {
         return facultyRepository.findBySubjects(subjects);
     }
 
-    public void saveFaculty(Faculty faculty) {
-        facultyRepository.save(faculty);
+    public Faculty saveFaculty(Faculty faculty) {
+        return facultyRepository.save(faculty);
     }
 
     public Faculty findOne(long id) {
