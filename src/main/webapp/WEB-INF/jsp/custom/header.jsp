@@ -4,7 +4,7 @@
 
 <c:choose>
 	<c:when test="${empty lang}">
-		<c:set var="lang" value="${empty param.lang ? 'en_US' : param.lang}" scope="session"/>
+		<c:set var="lang" value="${empty param.lang ? pageContext.request.locale : param.lang}" scope="session"/>
 	</c:when>
 	<c:otherwise>
 		<c:set var="lang" value="${empty param.lang ? lang : param.lang}" scope="session"/>
@@ -13,8 +13,6 @@
 
 <fmt:setLocale value="${lang}" />
 <fmt:setBundle basename="localization/messages" var="bundle" />
-
-<c:set var="context" value="${pageContext.request.contextPath}" />
 
 <!doctype html>
 <html>
@@ -39,38 +37,38 @@
         <div class="header">
 
             <div class="header__logo">
-                <a class="header__logo__link" href="${context}/">
+                <a class="header__logo__link" href="/">
                     <img class="header__logo__image" src="/images/logo.svg" alt="BoardSystem" />
                 </a>
             </div>
 
             <ul class="header__menu">
                 <li class="header__menu__item">
-                    <a class="header__menu__link" href="${context}/">
+                    <a class="header__menu__link" href="/">
                     	<fmt:message key="home" bundle="${bundle}" />
                    	</a>
                 </li>
                 <c:choose>
                     <c:when test="${empty user}">
                         <li class="header__menu__item">
-                            <a class="header__menu__link" href="${context}/board-system/auth/login">
+                            <a class="header__menu__link" href="/auth/login">
                             	<fmt:message key="logIn" bundle="${bundle}" />
                            	</a>
                         </li>
                         <li class="header__menu__item">
-                            <a class="header__menu__link" href="${context}/board-system/auth/signup">
+                            <a class="header__menu__link" href="/auth/signup">
                             	<fmt:message key="signUp" bundle="${bundle}" />
                            	</a>
                         </li>
                     </c:when>
                     <c:otherwise>
                         <li class="header__menu__item">
-                            <a class="header__menu__link" href="${context}/board-system/profile">
+                            <a class="header__menu__link" href="/profile">
                             	<fmt:message key="profile" bundle="${bundle}" />
                            	</a>
                         </li>
                         <li class="header__menu__item">
-                            <a class="header__menu__link" href="${context}/controller/logout">
+                            <a class="header__menu__link" href="/logout">
                             	<fmt:message key="logOut" bundle="${bundle}" />
                            	</a>
                         </li>
