@@ -25,10 +25,10 @@
     <meta name="x-ua-compatible" content="ie=edge" />
     <meta name="robots" content="index, follow" />
     
-    <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
 
-    <link rel="stylesheet" href="/styles/custom.css" />
+    <link rel="stylesheet" href="../styles/custom.css" />
 
 </head>
 <body>
@@ -37,38 +37,38 @@
         <div class="header">
 
             <div class="header__logo">
-                <a class="header__logo__link" href="/">
-                    <img class="header__logo__image" src="/images/logo.svg" alt="BoardSystem" />
+                <a class="header__logo__link" href="../">
+                    <img class="header__logo__image" src="../images/logo.svg" alt="BoardSystem" />
                 </a>
             </div>
 
             <ul class="header__menu">
                 <li class="header__menu__item">
-                    <a class="header__menu__link" href="/">
+                    <a class="header__menu__link" href="../">
                     	<fmt:message key="home" bundle="${bundle}" />
                    	</a>
                 </li>
                 <c:choose>
                     <c:when test="${empty user}">
                         <li class="header__menu__item">
-                            <a class="header__menu__link" href="/auth/login">
+                            <a class="header__menu__link" href="../auth/login">
                             	<fmt:message key="logIn" bundle="${bundle}" />
                            	</a>
                         </li>
                         <li class="header__menu__item">
-                            <a class="header__menu__link" href="/auth/signup">
+                            <a class="header__menu__link" href="../auth/signup">
                             	<fmt:message key="signUp" bundle="${bundle}" />
                            	</a>
                         </li>
                     </c:when>
                     <c:otherwise>
                         <li class="header__menu__item">
-                            <a class="header__menu__link" href="/profile">
+                            <a class="header__menu__link" href="../profile">
                             	<fmt:message key="profile" bundle="${bundle}" />
                            	</a>
                         </li>
                         <li class="header__menu__item">
-                            <a class="header__menu__link" href="/logout">
+                            <a class="header__menu__link" href="../logout">
                             	<fmt:message key="logOut" bundle="${bundle}" />
                            	</a>
                         </li>

@@ -13,7 +13,7 @@
     </c:if>
 
     <div class="content__section">
-        <form action="${context}/controller/login" method="post">
+        <form action="../auth/login" method="post">
             <div class="row">
                 <div class="row__item row__item--12">
                     <input class="input" type="text" name="login" placeholder="<fmt:message key="login" bundle="${bundle}" />" autocomplete="off" required />

@@ -1,11 +1,15 @@
 package com.projects.bs.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(indexes = @Index(columnList = "email", unique = true))
 public class User implements Serializable {

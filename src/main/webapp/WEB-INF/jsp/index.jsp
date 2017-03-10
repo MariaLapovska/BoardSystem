@@ -15,7 +15,7 @@
                         <option value="" ${empty selectedFaculty ? 'selected' : ''}>
                         	<fmt:message key="allFaculties" bundle="${bundle}" />
                        	</option>
-                        <c:forEach var="f" items="${facultiesList}">
+                        <c:forEach var="f" items="${faculties}">
                             <option value="${f.getId()}" ${selectedFaculty.getId() eq f.getId() ? 'selected' : ''}>
                             	${f.getName()}
                            	</option>
@@ -81,7 +81,7 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="a" items="${applicationsList}">
+                <c:forEach var="a" items="${applications}">
                     <tr>
                         <td>${a.getId()}</td>
                         <td>${a.getFaculty().getName()}</td>
@@ -99,13 +99,13 @@
         </table>
     </div>
 
-    <c:if test="${applicationsList.isEmpty()}">
+    <c:if test="${applications.isEmpty()}">
         <div class="content__section">
             <div class="alert alert--default"><fmt:message key="noApplications" bundle="${bundle}" /></div>
         </div>
     </c:if>
     
-	<jsp:include page="custom/pagination.jsp"></jsp:include>
+	<jsp:include page="custom/pagination.jsp"/>
 
 </div>
 
