@@ -1,5 +1,6 @@
 package com.projects.bs.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -7,6 +8,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Data
+@AllArgsConstructor
 @Entity
 @Table(indexes = @Index(columnList = "name", unique = true))
 public class Faculty implements Serializable {
