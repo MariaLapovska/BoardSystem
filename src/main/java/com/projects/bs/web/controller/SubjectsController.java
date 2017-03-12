@@ -26,7 +26,7 @@ public class SubjectsController {
     }
 
     @GetMapping("search/{name}")
-    public List<Subject> getSubjectByName(@PathVariable String name) {
+    public Subject getSubjectByName(@PathVariable String name) {
         return subjectService.findByName(name);
     }
 

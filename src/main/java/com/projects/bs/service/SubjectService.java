@@ -19,7 +19,7 @@ public class SubjectService {
         return subjectRepository.findAll();
     }
 
-    public List<Subject> findByName(String name) {
+    public Subject findByName(String name) {
         return subjectRepository.findByName(name);
     }
 

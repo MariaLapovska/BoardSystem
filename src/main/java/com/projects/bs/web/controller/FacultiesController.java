@@ -26,7 +26,7 @@ public class FacultiesController {
     }
 
     @GetMapping("search/{name}")
-    public List<Faculty> getFacultyByName(@PathVariable String name) {
+    public Faculty getFacultyByName(@PathVariable String name) {
         return facultyService.findByName(name);
     }
 
@@ -39,9 +39,6 @@ public class FacultiesController {
     public Faculty editFaculty(@PathVariable long id, @Valid @RequestBody Faculty faculty) {
         Faculty old = facultyService.findOne(id);
         old.setName(faculty.getName());
-        old.setInfo(faculty.getInfo());
-        old.setInfo(faculty.getInfo());
-        old.setInfo(faculty.getInfo());
         return facultyService.saveFaculty(old);
     }
 

@@ -17,11 +17,15 @@ public class ApplicationsController {
     @GetMapping("/")
     public String getApplications(Map<String, Object> model,
                                   @RequestParam(value = "faculty", required = false) Long facultyId,
-                                  @RequestParam(value = "search", required = false) String search) {
+                                  @RequestParam(value = "search", required = false) String search,
+                                  @RequestParam(value = "page", required = false) Long page,
+                                  @RequestParam(value = "field", required = false) String field,
+                                  @RequestParam(value = "order", required = false) String order) {
         model.put("faculties", facultyService.findAll());
         if (facultyId != null) {
             model.put("selectedFaculty", facultyService.findOne(facultyId));
         }
+        //model.put("applications", new ArrayList<>());
         return "index";
     }
 }

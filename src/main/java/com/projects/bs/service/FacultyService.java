@@ -24,7 +24,7 @@ public class FacultyService {
         return facultyRepository.findAll();
     }
 
-    public List<Faculty> findByName(String name) {
+    public Faculty findByName(String name) {
         return facultyRepository.findByName(name);
     }
 

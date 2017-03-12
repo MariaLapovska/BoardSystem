@@ -8,7 +8,7 @@
 
     <div class="content__section">
 
-        <form class="pull-left" method="get">
+        <form class="pull-left" method="GET">
             <div class="row">
                 <div class="row__item">
                     <select class="input input--select" name="faculty">
@@ -28,7 +28,7 @@
             </div>
         </form>
 
-        <form class="pull-right" method="get">
+        <form class="pull-right" method="GET">
             <div class="row">
                 <div class="row__item">
                     <input class="input" type="text" name="search" value="${param.search}" placeholder="<fmt:message key="searchCertificate" bundle="${bundle}" />" autocomplete="off" />
@@ -70,7 +70,7 @@
         <table class="table table--stripped">
             <thead>
                 <tr>
-                    <th><fmt:message key="Id" bundle="${bundle}" /></th>
+                    <th><fmt:message key="id" bundle="${bundle}" /></th>
                     <th><fmt:message key="faculty" bundle="${bundle}" /></th>
                     <th><fmt:message key="name" bundle="${bundle}" /></th>
                     <th><fmt:message key="surname" bundle="${bundle}" /></th>
@@ -99,13 +99,16 @@
         </table>
     </div>
 
-    <c:if test="${applications.isEmpty()}">
-        <div class="content__section">
-            <div class="alert alert--default"><fmt:message key="noApplications" bundle="${bundle}" /></div>
-        </div>
-    </c:if>
-    
-	<jsp:include page="custom/pagination.jsp"/>
+    <c:choose>
+        <c:when test="${!applications || applications.isEmpty()}">
+            <div class="content__section">
+                <div class="alert alert--default"><fmt:message key="noApplications" bundle="${bundle}" /></div>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <jsp:include page="custom/pagination.jsp"/>
+        </c:otherwise>
+    </c:choose>
 
 </div>
 
