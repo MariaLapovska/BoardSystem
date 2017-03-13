@@ -55,12 +55,12 @@
                 <c:choose>
                     <c:when test="${pageContext.request.userPrincipal.name eq null}">
                         <li class="header__menu__item">
-                            <a class="header__menu__link" href="${contextPath}/auth/login">
+                            <a class="header__menu__link" href="${contextPath}/login">
                             	<fmt:message key="logIn" bundle="${bundle}" />
                            	</a>
                         </li>
                         <li class="header__menu__item">
-                            <a class="header__menu__link" href="${contextPath}/auth/signup">
+                            <a class="header__menu__link" href="${contextPath}/signup">
                             	<fmt:message key="signUp" bundle="${bundle}" />
                            	</a>
                         </li>

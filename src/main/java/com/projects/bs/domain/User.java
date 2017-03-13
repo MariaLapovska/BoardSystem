@@ -28,10 +28,10 @@ public class User implements Serializable {
     private String login;
 
     @Column(name = "password", nullable = false, length = 60)
-    //@Pattern(regexp = "^\\S{5,20}$", message = "")//TODO: error message
     private String password;
 
     @Transient
+    @Pattern(regexp = "^\\S{5,20}$", message = "")//TODO: error message
     private String confirmPassword;
 
     @Column(name = "name", nullable = false, length = 25)
@@ -51,6 +51,6 @@ public class User implements Serializable {
     private Application application;
 
     public enum Role {
-        ROLE_USER, ROLE_ADMIN
+        USER, ADMIN
     }
 }

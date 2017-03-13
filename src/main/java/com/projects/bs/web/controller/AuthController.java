@@ -5,7 +5,6 @@ import com.projects.bs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,14 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping("auth")
 public class AuthController {
 
     @Autowired
@@ -33,57 +26,40 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @GetMapping("login")
-    public String loginPage() {
+    @GetMapping("/login")
+    public String getLoginPage() {
         return "/auth/login";
     }
 
-    @GetMapping("signup")
-    public String signUpPage(Model model) {
+    @GetMapping("/signup")
+    public String getSignUpPage(Model model) {
         model.addAttribute("userForm", new User());
         return "/auth/signup";
     }
 
-    @PostMapping("signup")
-    public String signUp(@ModelAttribute("userForm") User userForm, HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    @PostMapping("/signup")
+    public String signUp(@ModelAttribute("userForm") User userForm) {
         User user = userService.saveUser(userForm);
-        autologin(user.getLogin(), user.getPassword());
+        autoLogin(user);
 
-        return "/user/profile";
+        return "redirect:/user/profile";
     }
 
-    private boolean authenticateUserAndInitializeSessionByUsername(String username, UserDetailsService userDetailsService, HttpServletRequest request)
-    {
-        boolean result = true;
+    private boolean autoLogin(User user) {
+        try {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getLogin());
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new
+                    UsernamePasswordAuthenticationToken(userDetails, user.getConfirmPassword(), userDetails
+                    .getAuthorities());
+            authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
-        try
-        {
-            // generate session if one doesn't exist
-            request.getSession();
+            if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
 
-            // Authenticate the user
-            UserDetails user = userDetailsService.loadUserByUsername(username);
-            Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(auth);
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-
-            result = false;
-        }
-
-        return result;
-    }
-
-    private void autologin(String username, String password) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
-
-        authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-        if (usernamePasswordAuthenticationToken.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            return true;
+        } catch (Exception ex) {
+            return false;
         }
     }
 }
