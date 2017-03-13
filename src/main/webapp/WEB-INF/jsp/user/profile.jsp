@@ -2,7 +2,7 @@
 
 <div class="content">
 
-    <h1 class="content__title"><fmt:message key="welcome" bundle="${bundle}" /> ${user.getName()}!</h1>
+    <h1 class="content__title"><fmt:message key="welcome" bundle="${bundle}" /> ${pageContext.request.userPrincipal.name}!</h1>
 
 	<c:if test="${not empty param.message}">
         <div class="content__section">

@@ -20,7 +20,7 @@ public class SubjectService {
     }
 
     public Subject findByName(String name) {
-        return subjectRepository.findByName(name);
+        return subjectRepository.findOneByName(name);
     }
 
     public Subject saveSubject(Subject subject) {

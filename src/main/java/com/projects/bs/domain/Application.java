@@ -29,7 +29,7 @@ public class Application implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -41,13 +41,17 @@ public class Application implements Serializable {
     @Pattern(regexp = "^[0-9]{10}$", message = "") //TODO: message
     private String certificateNumber;
 
-    @Column(name = "certificate_grade", nullable = false, length = 10)
+    @Column(name = "certificate_grade", nullable = false)
     @Min(value = 100, message = "")@Max(value = 200, message = "") //TODO: message
     private int certificateGrade;
 
-    //private Map<Subject, Integer> exams;
+    @ElementCollection
+    @CollectionTable(name = "application_exam")
+    @MapKeyJoinColumn(name = "subject_id")
+    @Column(name = "exam_grade")
+    private Map<Subject, Integer> exams;
 
-//    public int getSumGrade() {
-//        return certificateGrade + exams.values().stream().reduce(0, Integer::sum);
-//    }
+    public int getSumGrade() {
+        return certificateGrade + exams.values().stream().reduce(0, Integer::sum);
+    }
 }

@@ -1,9 +1,10 @@
 package com.projects.bs.service.auth;
 
 import com.projects.bs.domain.User;
-import com.projects.bs.repository.UserRepository;
+import com.projects.bs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,19 +21,15 @@ import java.util.stream.Collectors;
 public class CredentialsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(s);
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        User user = userService.findByLogin(login);
 
-        Set<GrantedAuthority> grantedAuthorities
-                = user.getRoles().stream()
-                                 .map(role -> new SimpleGrantedAuthority(role.getName()))
-                                 .collect(Collectors.toSet());
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+        return new org.springframework.security.core.userdetails.User(user.getLogin(),
                                                                       user.getPassword(),
-                                                                      grantedAuthorities);
+                AuthorityUtils.createAuthorityList(user.getRole().toString()));
     }
 }

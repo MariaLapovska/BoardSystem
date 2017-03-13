@@ -7,13 +7,15 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user", indexes = @Index(columnList = "email", unique = true))
+@Table(name = "user", indexes = {
+        @Index(columnList = "login", unique = true),
+        @Index(columnList = "application_id", unique = true)
+})
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,11 +23,11 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "email", nullable = false, length = 20)
+    @Column(name = "login", nullable = false, length = 20)
     @Pattern(regexp = "^\\S{5,20}$", message = "")//TODO: error message
-    private String email;
+    private String login;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, length = 60)
     //@Pattern(regexp = "^\\S{5,20}$", message = "")//TODO: error message
     private String password;
 
@@ -40,10 +42,15 @@ public class User implements Serializable {
     @Pattern(regexp = "^[a-zA-Z ,.'-]{3,25}$", message = "")//TODO: error message
     private String surname;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles;
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @OneToOne
+    @JoinColumn(name = "application_id")
+    private Application application;
+
+    public enum Role {
+        ROLE_USER, ROLE_ADMIN
+    }
 }

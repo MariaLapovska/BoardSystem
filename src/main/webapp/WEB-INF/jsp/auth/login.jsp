@@ -13,7 +13,7 @@
     </c:if>
 
     <div class="content__section">
-        <form action="../auth/login" method="post">
+        <form action="${contextPath}/auth/login" method="post">
             <div class="row">
                 <div class="row__item row__item--12">
                     <input class="input" type="text" name="login" placeholder="<fmt:message key="login" bundle="${bundle}" />" autocomplete="off" required />
@@ -22,6 +22,7 @@
             <div class="row">
                 <div class="row__item row__item--12">
                     <input class="input" type="password" name="password" placeholder="<fmt:message key="password" bundle="${bundle}" />" autocomplete="off" required />
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </div>
             </div>
             <div class="row">

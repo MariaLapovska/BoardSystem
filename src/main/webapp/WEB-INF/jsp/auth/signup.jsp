@@ -11,30 +11,45 @@
     </c:if>
 
     <div class="content__section">
-        <form action="../auth/signup" method="post">
+        <form:form method="POST" modelAttribute="userForm">
             <div class="row">
                 <div class="row__item row__item--12">
-                    <input class="input" type="text" name="login" placeholder="<fmt:message key="login" bundle="${bundle}" />" autocomplete="off" required />
+                    <spring:bind path="login">
+                        <fmt:message key="login" bundle="${bundle}" var="login"/>
+                        <form:input class="input" type="text" path="login" placeholder="${login}" autocomplete="off"></form:input>
+                    </spring:bind>
                 </div>
             </div>
             <div class="row">
                 <div class="row__item row__item--6">
-                    <input class="input" type="text" name="name" placeholder="<fmt:message key="name" bundle="${bundle}" />" autocomplete="off" required />
+                    <spring:bind path="name">
+                        <fmt:message key="name" bundle="${bundle}" var="name"/>
+                        <form:input class="input" type="text" path="name" placeholder="${name}"></form:input>
+                    </spring:bind>
                 </div>
             </div>
             <div class="row">
                 <div class="row__item row__item--6">
-                    <input class="input" type="text" name="surname" placeholder="<fmt:message key="surname" bundle="${bundle}" />" autocomplete="off" required />
+                    <spring:bind path="surname">
+                        <fmt:message key="surname" bundle="${bundle}" var="surname"/>
+                        <form:input class="input" type="text" path="surname" placeholder="${surname}"></form:input>
+                    </spring:bind>
                 </div>
             </div>
             <div class="row">
                 <div class="row__item row__item--6">
-                    <input class="input" type="password" name="password" placeholder="<fmt:message key="password" bundle="${bundle}" />" autocomplete="off" required />
+                    <spring:bind path="password">
+                        <fmt:message key="password" bundle="${bundle}" var="password"/>
+                        <form:input class="input" type="password" path="password" placeholder="${password}"></form:input>
+                    </spring:bind>
                 </div>
             </div>
             <div class="row">
                 <div class="row__item row__item--6">
-                    <input class="input" type="password" name="repeatPassword" placeholder="<fmt:message key="repPassword" bundle="${bundle}" />" autocomplete="off" required />
+                    <spring:bind path="confirmPassword">
+                        <fmt:message key="repPassword" bundle="${bundle}" var="repPassword"/>
+                        <form:input class="input" type="password" path="confirmPassword" placeholder="${repPassword}"></form:input>
+                    </spring:bind>
                 </div>
             </div>
             <div class="row">
@@ -42,7 +57,7 @@
                     <input class="button button--primary" type="submit" value="<fmt:message key="signUp" bundle="${bundle}" />" />
                 </div>
             </div>
-        </form>
+        </form:form>
     </div>
 
 </div>
