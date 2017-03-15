@@ -2,7 +2,7 @@
 
 <div class="content">
 
-    <h1 class="content__title"><fmt:message key="welcome" bundle="${bundle}" /> ${pageContext.request.userPrincipal.name}!</h1>
+    <h1 class="content__title"><fmt:message key="welcome" bundle="${bundle}" /> ${user.getName()}!</h1>
 
 	<c:if test="${not empty param.message}">
         <div class="content__section">
@@ -12,12 +12,12 @@
         </div>
     </c:if>
 
-    <c:if test="${empty userApplication}">
+    <c:if test="${empty application}">
         <div class="content__section">
             <div class="alert alert--warning">
                 <p><fmt:message key="noApplication" bundle="${bundle}" /></p>
                 <p>
-                    <a class="button button--primary" href="${context}/board-system/application/add">
+                    <a class="button button--primary" href="${context}/application/add">
                     	<fmt:message key="createApplication" bundle="${bundle}" />
                     </a>
                 </p>
@@ -25,15 +25,15 @@
         </div>
     </c:if>
 
-    <c:if test="${not empty userApplication && userApplication.getFaculty().isAvailable()}">
+    <c:if test="${not empty application && application.getFaculty().isAvailable()}">
         <div class="content__section">
             <div class="alert alert--success">
                 <p><fmt:message key="haveApplication" bundle="${bundle}" /></p>
                 <p>
-                    <a class="button button--primary" href="${context}/board-system/application/edit">
+                    <a class="button button--primary" href="${context}/application/edit">
                     	<fmt:message key="editApplication" bundle="${bundle}" />
                     </a>
-                    <a class="button button--default" href="${context}/board-system/application/delete">
+                    <a class="button button--default" href="${context}/application/delete">
                     	<fmt:message key="deleteApplication" bundle="${bundle}" />
                     </a>
                 </p>
@@ -41,19 +41,19 @@
         </div>
     </c:if>
     
-    <c:if test="${not empty userApplication && not userApplication.getFaculty().isAvailable()}">
+    <c:if test="${not empty application && not application.getFaculty().isAvailable()}">
         <div class="content__section">
 	        <c:choose>
-			    <c:when test="${applicationNo le userApplication.getFaculty().getPlan()}">
+			    <c:when test="${applicationNo le application.getFaculty().getRecruitmentPlan()}">
 			        <div class="alert alert--success">
-		                <fmt:message key="facultyPassed" bundle="${bundle}" /> ${userApplication.getFaculty().getName()}.
+		                <fmt:message key="facultyPassed" bundle="${bundle}" /> ${application.getFaculty().getName()}.
 		                 <fmt:message key="number" bundle="${bundle}" /> ${applicationNo}. 
 		                 <fmt:message key="totalNumber" bundle="${bundle}" /> ${totalApplicationNo}
 	            	</div>
 			    </c:when>    
 			    <c:otherwise>
 			        <div class="alert alert--danger">
-		                <fmt:message key="facultyNotPassed" bundle="${bundle}" /> ${userApplication.getFaculty().getName()}.
+		                <fmt:message key="facultyNotPassed" bundle="${bundle}" /> ${application.getFaculty().getName()}.
 		                 <fmt:message key="number" bundle="${bundle}" /> ${applicationNo}. 
 		                 <fmt:message key="totalNumber" bundle="${bundle}" /> ${totalApplicationNo}
 	            	</div>
@@ -65,13 +65,13 @@
     <div class="content__section">
         <jsp:include page="../custom/profileInfo.jsp"/>
         
-        <c:if test="${empty userApplication || userApplication.getFaculty().isAvailable()}">
+        <c:if test="${empty application || application.getFaculty().isAvailable()}">
 	        <div class="row">
 	            <div class="row__item">
-	                <a class="button button--primary" href="${context}/board-system/profile/edit">
+	                <a class="button button--primary" href="${context}/profile/edit">
 	                	<fmt:message key="editProfile" bundle="${bundle}" />
 	                </a>
-	                <a class="button button--default" href="${context}/board-system/profile/delete">
+	                <a class="button button--default" href="${context}/profile/delete">
 	                	<fmt:message key="deleteProfile" bundle="${bundle}" />
 	                </a>
 	            </div>
@@ -88,24 +88,26 @@
                 <tr>
                     <th><fmt:message key="faculty" bundle="${bundle}" /></th>
                     <th><fmt:message key="exams" bundle="${bundle}" /></th>
+                    <th><fmt:message key="passingScore" bundle="${bundle}" /></th>
                     <th><fmt:message key="plan" bundle="${bundle}" /></th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="f" items="${examsList}">
+                <c:forEach var="f" items="${faculties}">
                     <tr>
                         <td>${f.getName()}</td>
                         <td>${f.getSubjects().toArray()[0].getName()},
                        		${f.getSubjects().toArray()[1].getName()},
                         	${f.getSubjects().toArray()[2].getName()}</td>
-                       	<td>${f.getPlan()}</td>
+                       	<td>${f.getPassingScore()}</td>
+                       	<td>${f.getRecruitmentPlan()}</td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
     </div>
 
-    <c:if test="${examsList.isEmpty()}">
+    <c:if test="${faculties.isEmpty()}">
         <div class="content__section">
             <div class="alert alert--default"><fmt:message key="noFaculties" bundle="${bundle}" /></div>
         </div>

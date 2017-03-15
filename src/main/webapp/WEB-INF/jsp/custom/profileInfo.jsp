@@ -33,10 +33,8 @@
 	<div class="row__item">
 		<span class="label label--bold"> <fmt:message key="password"
 				bundle="${bundle}" />:
-		</span> <span class="label"> <c:forEach var="p"
-				items="${user.getPassword().toCharArray()}">
-           		*
-           	</c:forEach>
+		</span> <span class="label">
+           	******
 		</span>
 	</div>
 </div>

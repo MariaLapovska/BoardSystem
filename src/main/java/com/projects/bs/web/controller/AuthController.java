@@ -42,7 +42,7 @@ public class AuthController {
         User user = userService.saveUser(userForm);
         autoLogin(user);
 
-        return "redirect:/user/profile";
+        return "redirect:/";
     }
 
     private boolean autoLogin(User user) {
@@ -55,6 +55,7 @@ public class AuthController {
 
             if (usernamePasswordAuthenticationToken.isAuthenticated()) {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                //request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
             }
 
             return true;

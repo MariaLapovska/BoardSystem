@@ -17,10 +17,10 @@
         
         <div class="row">
             <div class="row__item">
-                <a class="button button--primary" href="${context}/board-system/profile/edit">
+                <a class="button button--primary" href="${context}/profile/edit">
                 	<fmt:message key="editProfile" bundle="${bundle}" />
                 </a>
-                <a class="button button--default" href="${context}/board-system/profile/delete">
+                <a class="button button--default" href="${context}/profile/delete">
                 	<fmt:message key="deleteProfile" bundle="${bundle}" />
                 </a>
             </div>
@@ -34,12 +34,12 @@
     <h1 class="content__title"><fmt:message key="administrationPanel" bundle="${bundle}" /></h1>
 
     <div class="content__section">
-        <form action="${context}/board-system/faculty/close" method="post">
+        <form action="${context}/faculty/close" method="post">
             <div class="row">
                 <div class="row__item">
                     <select class="input input--select" name="faculty">
                         <option value=""><fmt:message key="chooseFaculty" bundle="${bundle}" /></option>
-                        <c:forEach var="f" items="${facultiesList}">
+                        <c:forEach var="f" items="${faculties}">
                             <option value="${f.getId()}">${f.getName()}</option>
                         </c:forEach>
                     </select>
@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="row__item">
                     <input class="button button--primary" type="submit" value="<fmt:message key="closeFaculty" bundle="${bundle}" />" />
-                    <a class="button button--default" href="${context}/board-system/faculty/add">
+                    <a class="button button--default" href="${context}/faculty/add">
                         <fmt:message key="addFaculty" bundle="${bundle}" />
                     </a>
                 </div>

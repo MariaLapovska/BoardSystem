@@ -11,7 +11,7 @@
     </c:if>
 
     <div class="content__section">
-        <form action="${context}/controller/profile/edit" method="post">
+        <form method="POST">
             <div class="row">
                 <div class="row__item row__item--12">
                     <input class="input" type="text" name="login" value="${user.getLogin()}" placeholder="<fmt:message key="login" bundle="${bundle}" />" readonly />
