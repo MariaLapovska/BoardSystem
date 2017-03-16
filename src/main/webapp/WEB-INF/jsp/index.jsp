@@ -89,9 +89,12 @@
                         <td>${a.getUser().getSurname()}</td>
                         <td>${a.getCertificateNumber()}</td>
                         <td>${a.getCertificateGrade()}</td>
-                        <td>${a.getExams().values().toArray()[0]},
-                       		${a.getExams().values().toArray()[1]},
-                        	${a.getExams().values().toArray()[2]}</td>
+                        <td>
+                            <c:forEach var="exam" items="${a.getExams()}">
+                                ${exam.getKey().getName()} - ${exam.getValue()}
+                                <br/>
+                            </c:forEach>
+                        </td>
                         <td>${a.getSumGrade()}</td>
                     </tr>
                 </c:forEach>
@@ -100,7 +103,7 @@
     </div>
 
     <c:choose>
-        <c:when test="${!applications || applications.isEmpty()}">
+        <c:when test="${empty applications || applications.isEmpty()}">
             <div class="content__section">
                 <div class="alert alert--default"><fmt:message key="noApplications" bundle="${bundle}" /></div>
             </div>

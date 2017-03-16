@@ -52,9 +52,9 @@ public class ProfileController {
         Application application = applicationService.findByUser(user);
         if (application != null) {
             model.addAttribute("application", application);
-            List<Application> applications = applicationService.findByFaculty(application.getFaculty());
-            model.addAttribute("applicationNo", applications.indexOf(application));
-            model.addAttribute("totalApplicationNo", applications.size());
+//            List<Application> applications = applicationService.findByFaculty(application.getFaculty());
+//            model.addAttribute("applicationNo", applications.indexOf(application));
+//            model.addAttribute("totalApplicationNo", applications.size());
         }
         return "/user/profile";
     }

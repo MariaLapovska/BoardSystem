@@ -9,6 +9,8 @@ import java.util.Set;
 
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     Faculty findOneByName(String name);
+
     List<Faculty> findByIsAvailable(boolean isAvailable);
+
     List<Faculty> findBySubjects(Set<Subject> subjects);
 }
