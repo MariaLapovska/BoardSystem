@@ -95,7 +95,7 @@
                                 <br/>
                             </c:forEach>
                         </td>
-                        <td>${a.getSumGrade()}</td>
+                        <td>${a.getTotalGrade()}</td>
                     </tr>
                 </c:forEach>
             </tbody>

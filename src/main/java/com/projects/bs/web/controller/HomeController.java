@@ -30,7 +30,7 @@ public class HomeController {
                                   @RequestParam(value = "page", required = false) Integer page) {
         model.put("faculties", facultyService.findAll());
 
-        if (search != null) {
+        if (search != null && !search.isEmpty()) {
             model.put("applications", applicationService.findByParameter(search));
             model.put("currentPage", 1);
             model.put("noOfPages", 1);
@@ -44,14 +44,14 @@ public class HomeController {
             Faculty faculty = facultyService.findOne(facultyId);
             applications = applicationService.findByFaculty(faculty, page, APPLICATIONS_PER_PAGE);
             model.put("selectedFaculty", faculty);
-            model.put("applications", applications);
+            model.put("applications", applications.getContent());
         } else {
             applications = applicationService.findAll(page, APPLICATIONS_PER_PAGE);
-            model.put("applications", applications);
+            model.put("applications", applications.getContent());
         }
 
         model.put("currentPage", page);
-        model.put("noOfPages", applications.getSize() / APPLICATIONS_PER_PAGE);
+        model.put("noOfPages", applications.getTotalPages());
 
         return "index";
     }

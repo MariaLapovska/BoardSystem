@@ -25,7 +25,7 @@ public class FacultyService {
     }
 
     public Faculty findByName(String name) {
-        return facultyRepository.findOneByName(name);
+        return facultyRepository.findOneByNameIgnoreCase(name);
     }
 
     public List<Faculty> findByIsAvailable(boolean isAvailable) {

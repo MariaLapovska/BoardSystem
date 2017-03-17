@@ -1,14 +1,13 @@
 package com.projects.bs.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 
 @Data
+@EqualsAndHashCode(exclude = "id")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

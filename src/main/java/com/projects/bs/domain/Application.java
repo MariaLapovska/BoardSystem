@@ -1,8 +1,6 @@
 package com.projects.bs.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -13,6 +11,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 @Data
+@EqualsAndHashCode(exclude = "id")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -50,6 +49,10 @@ public class Application implements Serializable {
     @MapKeyJoinColumn(name = "subject_id")
     @Column(name = "exam_grade")
     private Map<Subject, Integer> exams;
+
+    @Column(name = "total_grade", nullable = false)
+    @Min(value = 400, message = "")@Max(value = 800, message = "") //TODO: message
+    private int totalGrade;
 
     public int getSumGrade() {
         return certificateGrade + exams.values().stream().reduce(0, Integer::sum);

@@ -38,7 +38,7 @@ INSERT INTO faculty_subject(faculty_id, subject_id) VALUES (5, 9);
 INSERT INTO user(id, login, password, name, surname, role) VALUES (1, 'admin', '$2a$06$SwVUZcg9GFgAtXddyxYl6uJVszIJdV0e4/RGXHu5wZO4Rz2lUTpe.', 'Ivan', 'Ivanov', 'ADMIN');
 INSERT INTO user(id, login, password, name, surname, role) VALUES (2, 'maria', '$2a$06$sM/AXOcuTpLmZ0Eo.YjTsuDToJ7rGkhcz3e34juC6NiSFwsJxjEea', 'Ivan', 'Ivanov', 'USER');
 
-INSERT INTO application(id, certificate_grade, certificate_number, faculty_id, user_id) VALUES (1, 180, '0123456789', 1, 2);
+INSERT INTO application(id, certificate_grade, certificate_number, faculty_id, user_id, total_grade) VALUES (1, 180, '0123456789', 1, 2, 780);
 
 INSERT INTO application_exam(application_id, exam_grade, subject_id) VALUES (1, 200, 1);
 INSERT INTO application_exam(application_id, exam_grade, subject_id) VALUES (1, 200, 2);

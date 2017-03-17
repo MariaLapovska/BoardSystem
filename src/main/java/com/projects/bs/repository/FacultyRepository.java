@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
-    Faculty findOneByName(String name);
+    Faculty findOneByNameIgnoreCase(String name);
 
     List<Faculty> findByIsAvailable(boolean isAvailable);
 

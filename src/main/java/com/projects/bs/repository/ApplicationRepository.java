@@ -12,7 +12,9 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     Application findOneByUser(User user);
 
-    List<Application> findByNameContainingOrSurnameContainingOrCertificateNumberContaining(String name, String surname, String certificateNumber);
+    List<Application> findByCertificateNumberContaining(String certificateNumber);
+
+    List<Application> findByFaculty(Faculty faculty);
 
     Page<Application> findByFaculty(Faculty faculty, Pageable pageable);
 }
