@@ -77,10 +77,11 @@
         </dependency>
         <!-- /Spring boot -->
 
-        <!-- H2 Database -->
+        <!-- PostgreSQL Database -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4-1206-jdbc42</version>
         </dependency>
 
         <!-- Caching -->

@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user", indexes = {
+@Table(name = "uuser", indexes = {
         @Index(columnList = "login", unique = true),
         @Index(columnList = "application_id", unique = true)
 })
