@@ -5,12 +5,17 @@ import com.projects.bs.domain.User;
 import com.projects.bs.service.ApplicationService;
 import com.projects.bs.service.FacultyService;
 import com.projects.bs.service.UserService;
+import com.projects.bs.service.auth.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.List;
 
@@ -25,6 +30,9 @@ public class ProfileController {
 
     @Autowired
     private ApplicationService applicationService;
+
+    @Autowired
+    private SecurityService securityService;
 
     @GetMapping("/profile")
     public String getProfilePage(Principal principal, Model model) {
@@ -60,22 +68,35 @@ public class ProfileController {
     }
 
     @GetMapping("/profile/edit")
-    public String getEditProfilePage() {
+    public String getEditProfilePage(Principal principal, Model model) {
+        User currentUser = userService.findByLogin(principal.getName());
+        model.addAttribute("user", currentUser);
+        model.addAttribute("userForm", new User());
         return "/profile/editProfile";
     }
 
     @GetMapping("/profile/delete")
-    public String getDeleteProfilePage() {
+    public String getDeleteProfilePage(Principal principal, Model model) {
+        User currentUser = userService.findByLogin(principal.getName());
+        model.addAttribute("application", currentUser.getApplication());
         return "/profile/deleteProfile";
     }
 
     @PostMapping("/profile/edit")
-    public void editProfile() {
-
+    public String editProfile(Principal principal, @ModelAttribute("userForm") User userForm) {
+        User currentUser = userService.findByLogin(principal.getName());
+        currentUser.setName(userForm.getName());
+        currentUser.setSurname(userForm.getSurname());
+        currentUser.setPassword(userForm.getNewPassword());
+        userService.saveUser(currentUser);
+        return "redirect:/profile";
     }
 
     @PostMapping("/profile/delete")
-    public  void deleteProfile() {
-
+    public String deleteProfile(HttpServletRequest request, HttpServletResponse response) {
+        User currentUser = userService.findByLogin(request.getUserPrincipal().getName());
+        userService.delete(currentUser.getId());
+        securityService.autoLogout(request, response);
+        return "redirect:/";
     }
 }

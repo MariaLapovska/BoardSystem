@@ -88,7 +88,6 @@
                 <tr>
                     <th><fmt:message key="faculty" bundle="${bundle}" /></th>
                     <th><fmt:message key="exams" bundle="${bundle}" /></th>
-                    <th><fmt:message key="passingScore" bundle="${bundle}" /></th>
                     <th><fmt:message key="plan" bundle="${bundle}" /></th>
                 </tr>
             </thead>
@@ -99,7 +98,6 @@
                         <td>${f.getSubjects().toArray()[0].getName()},
                        		${f.getSubjects().toArray()[1].getName()},
                         	${f.getSubjects().toArray()[2].getName()}</td>
-                       	<td>${f.getPassingScore()}</td>
                        	<td>${f.getRecruitmentPlan()}</td>
                     </tr>
                 </c:forEach>

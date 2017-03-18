@@ -19,6 +19,7 @@
             <div class="row">
                 <div class="row__item row__item--12">
                     <input class="button button--danger" type="submit" value="<fmt:message key="delete" bundle="${bundle}" />" />
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <a class="button button--default" href="${context}/profile"><fmt:message key="cancel" bundle="${bundle}" /></a>
                 </div>
             </div>

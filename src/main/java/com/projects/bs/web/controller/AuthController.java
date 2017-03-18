@@ -2,6 +2,7 @@ package com.projects.bs.web.controller;
 
 import com.projects.bs.domain.User;
 import com.projects.bs.service.UserService;
+import com.projects.bs.service.auth.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,10 +22,7 @@ public class AuthController {
     private UserService userService;
 
     @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private SecurityService securityService;
 
     @GetMapping("/login")
     public String getLoginPage() {
@@ -40,27 +38,8 @@ public class AuthController {
     @PostMapping("/signup")
     public String signUp(@ModelAttribute("userForm") User userForm) {
         User user = userService.saveUser(userForm);
-        autoLogin(user);
+        securityService.autoLogin(user);
 
         return "redirect:/";
-    }
-
-    private boolean autoLogin(User user) {
-        try {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getLogin());
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new
-                    UsernamePasswordAuthenticationToken(userDetails, user.getConfirmPassword(), userDetails
-                    .getAuthorities());
-            authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-            if (usernamePasswordAuthenticationToken.isAuthenticated()) {
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                //request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-            }
-
-            return true;
-        } catch (Exception ex) {
-            return false;
-        }
     }
 }

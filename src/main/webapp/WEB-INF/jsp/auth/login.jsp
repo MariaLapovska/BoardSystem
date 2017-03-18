@@ -27,6 +27,12 @@
             </div>
             <div class="row">
                 <div class="row__item row__item--12">
+                    <input type="checkbox" name="remember-me-param" id="remember-me-param"/>
+                    <label for="remember-me-param"><fmt:message key="rememberMe" bundle="${bundle}" /></label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row__item row__item--12">
                     <input class="button button--primary" type="submit" value="<fmt:message key="logIn" bundle="${bundle}" />" />
                 </div>
             </div>

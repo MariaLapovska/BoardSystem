@@ -34,18 +34,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/application/**").hasAuthority("USER")
                 .antMatchers("/faculty/**", "/subject/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
+
                 .and()
+
                 .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error")
                 .usernameParameter("login")
                 .passwordParameter("password")
                 .permitAll()
+
                 .and()
+
                 .logout()
                 .logoutUrl("/logout")
+                .deleteCookies("remember-me")
                 .logoutSuccessUrl("/")
-                .permitAll();
+                .permitAll()
+
+                .and()
+
+                .rememberMe()
+                .key("rem-me-key")
+                .rememberMeParameter("remember-me-param")
+                .rememberMeCookieName("my-remember-me")
+                .tokenValiditySeconds(172800);
     }
 
     @Override

@@ -31,6 +31,10 @@ public class User implements Serializable {
 
     @Transient
     @Pattern(regexp = "^\\S{5,20}$", message = "")//TODO: error message
+    private String newPassword;
+
+    @Transient
+    @Pattern(regexp = "^\\S{5,20}$", message = "")//TODO: error message
     private String confirmPassword;
 
     @Column(name = "name", nullable = false, length = 25)
