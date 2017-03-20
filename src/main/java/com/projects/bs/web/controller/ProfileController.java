@@ -6,16 +6,18 @@ import com.projects.bs.service.ApplicationService;
 import com.projects.bs.service.FacultyService;
 import com.projects.bs.service.UserService;
 import com.projects.bs.service.auth.SecurityService;
+import com.projects.bs.web.dto.EditProfileDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -58,8 +60,8 @@ public class ProfileController {
         model.addAttribute("faculties", facultyService.findByIsAvailable(true));
 
         Application application = applicationService.findByUser(user);
-        if (application != null) {
-            model.addAttribute("application", application);
+        model.addAttribute("application", application);
+        if (application != null && !application.getFaculty().isAvailable()) {
             List<Application> applications = applicationService.findByFaculty(application.getFaculty());
             model.addAttribute("applicationNo", applications.indexOf(application));
             model.addAttribute("totalApplicationNo", applications.size());
@@ -71,7 +73,7 @@ public class ProfileController {
     public String getEditProfilePage(Principal principal, Model model) {
         User currentUser = userService.findByLogin(principal.getName());
         model.addAttribute("user", currentUser);
-        model.addAttribute("userForm", new User());
+        model.addAttribute("editUserForm", new EditProfileDto());
         return "/profile/editProfile";
     }
 
@@ -83,13 +85,20 @@ public class ProfileController {
     }
 
     @PostMapping("/profile/edit")
-    public String editProfile(Principal principal, @ModelAttribute("userForm") User userForm) {
+    public String editProfile(@ModelAttribute("editUserForm") @Valid EditProfileDto editUserForm, BindingResult result, Principal principal, Model model) {
         User currentUser = userService.findByLogin(principal.getName());
-        currentUser.setName(userForm.getName());
-        currentUser.setSurname(userForm.getSurname());
-        currentUser.setPassword(userForm.getNewPassword());
-        userService.saveUser(currentUser);
-        return "redirect:/profile";
+        if (result.hasErrors() || !userService.passwordMatches(editUserForm.getOldPassword(), currentUser.getPassword())) {
+            model.addAttribute("user", currentUser);
+            model.addAttribute("editUserForm", new EditProfileDto());
+            model.addAttribute("error", "wrongInput");
+            return "/profile/editProfile";
+        }
+        currentUser = userService.saveUser(editUserForm.editUser(currentUser));
+        String message = "changesSuccess";
+        if (currentUser == null || currentUser.getId() == 0) {
+            message = "changesError";
+        }
+        return "redirect:/profile?message=" + message;
     }
 
     @PostMapping("/profile/delete")

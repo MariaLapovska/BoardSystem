@@ -37,11 +37,9 @@ public class Application implements Serializable {
     private Faculty faculty;
 
     @Column(name = "certificate_number", nullable = false, length = 10)
-    @Pattern(regexp = "^[0-9]{10}$", message = "") //TODO: message
     private String certificateNumber;
 
     @Column(name = "certificate_grade", nullable = false)
-    @Min(value = 100, message = "")@Max(value = 200, message = "") //TODO: message
     private int certificateGrade;
 
     @ElementCollection
@@ -51,7 +49,6 @@ public class Application implements Serializable {
     private Map<Subject, Integer> exams;
 
     @Column(name = "total_grade", nullable = false)
-    @Min(value = 400, message = "")@Max(value = 800, message = "") //TODO: message
     private int totalGrade;
 
     public int getSumGrade() {

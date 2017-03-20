@@ -21,7 +21,6 @@ public class CredentialsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         User user = userService.findByLogin(login);
 
-
         return new org.springframework.security.core.userdetails.User(user.getLogin(),
                                                                       user.getPassword(),
                 AuthorityUtils.createAuthorityList(user.getRole().toString()));

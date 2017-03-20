@@ -38,6 +38,10 @@ public class ApplicationService {
         return applicationRepository.findByCertificateNumberContaining(certificateNumber);
     }
 
+    public Application findByCertificate(String certificateNumber) {
+        return applicationRepository.findByCertificateNumber(certificateNumber);
+    }
+
     public Application findByUser(User user) {
         return applicationRepository.findOneByUser(user);
     }

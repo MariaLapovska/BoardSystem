@@ -21,9 +21,6 @@ public class UserService {
 
     public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if (user.getRole() == null) {
-            user.setRole(User.Role.USER);
-        }
         return userRepository.save(user);
     }
 
@@ -41,5 +38,9 @@ public class UserService {
 
     public void delete(long id) {
         userRepository.delete(id);
+    }
+
+    public boolean passwordMatches(String raw, String encrypted) {
+        return bCryptPasswordEncoder.matches(raw, encrypted);
     }
 }

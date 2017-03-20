@@ -24,11 +24,11 @@ public class SecurityService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public boolean autoLogin(User user) {
+    public boolean autoLogin(User user, String password) {
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(user.getLogin());
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new
-                    UsernamePasswordAuthenticationToken(userDetails, user.getConfirmPassword(), userDetails
+                    UsernamePasswordAuthenticationToken(userDetails, password, userDetails
                     .getAuthorities());
             authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 

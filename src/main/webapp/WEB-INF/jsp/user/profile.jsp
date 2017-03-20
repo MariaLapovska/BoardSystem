@@ -95,9 +95,12 @@
                 <c:forEach var="f" items="${faculties}">
                     <tr>
                         <td>${f.getName()}</td>
-                        <td>${f.getSubjects().toArray()[0].getName()},
-                       		${f.getSubjects().toArray()[1].getName()},
-                        	${f.getSubjects().toArray()[2].getName()}</td>
+                        <td>
+                            <c:forEach var="s" items="${f.getSubjects()}">
+                                ${s.getName()}
+                                <br/>
+                            </c:forEach>
+                        </td>
                        	<td>${f.getRecruitmentPlan()}</td>
                     </tr>
                 </c:forEach>

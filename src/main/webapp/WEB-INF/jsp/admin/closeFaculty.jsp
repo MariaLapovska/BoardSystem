@@ -18,7 +18,7 @@
         <table class="table table--stripped">
             <thead>
                 <tr>
-                    <th><fmt:message key="Id" bundle="${bundle}" /></th>
+                    <th><fmt:message key="id" bundle="${bundle}" /></th>
                     <th><fmt:message key="name" bundle="${bundle}" /></th>
                     <th><fmt:message key="surname" bundle="${bundle}" /></th>
                     <th><fmt:message key="certificateNumber" bundle="${bundle}" /></th>
@@ -28,24 +28,27 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="a" items="${applicationsList}">
+                <c:forEach var="a" items="${applications}">
                     <tr>
                         <td>${a.getId()}</td>
                         <td>${a.getUser().getName()}</td>
                         <td>${a.getUser().getSurname()}</td>
                         <td>${a.getCertificateNumber()}</td>
                         <td>${a.getCertificateGrade()}</td>
-                        <td>${a.getExams().values().toArray()[0]},
-                       		${a.getExams().values().toArray()[1]},
-                        	${a.getExams().values().toArray()[2]}</td>
-                        <td>${a.getSumGrade()}</td>
+                        <td>
+                            <c:forEach var="exam" items="${a.getExams()}">
+                                ${exam.getKey().getName()} - ${exam.getValue()}
+                                <br/>
+                            </c:forEach>
+                        </td>
+                        <td>${a.getTotalGrade()}</td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
     </div>
 
-    <c:if test="${applicationsList.isEmpty()}">
+    <c:if test="${applications.isEmpty()}">
         <div class="content__section">
             <div class="alert alert--default"><fmt:message key="noApplications" bundle="${bundle}" /></div>
         </div>
@@ -53,10 +56,10 @@
     
     <div class="row">
             <div class="row__item">
-                <a class="button button--primary" href="${context}/board-system/faculty/download?faculty=${faculty.getId()}">
+                <a class="button button--primary" href="${context}/faculty/download?faculty=${faculty.getId()}">
                 	<fmt:message key="downloadRegister" bundle="${bundle}" />
                 </a>
-                <a class="button button--default" href="${context}/board-system/profile">
+                <a class="button button--default" href="${context}/profile">
                 	<fmt:message key="backProfile" bundle="${bundle}" />
                 </a>
             </div>

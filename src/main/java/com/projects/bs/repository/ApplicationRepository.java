@@ -12,6 +12,8 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     Application findOneByUser(User user);
 
+    Application findByCertificateNumber(String certificateNumber);
+
     List<Application> findByCertificateNumberContaining(String certificateNumber);
 
     List<Application> findByFaculty(Faculty faculty);

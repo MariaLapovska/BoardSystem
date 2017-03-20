@@ -34,10 +34,10 @@
     <h1 class="content__title"><fmt:message key="administrationPanel" bundle="${bundle}" /></h1>
 
     <div class="content__section">
-        <form action="${context}/faculty/close" method="post">
+        <form action="${context}/faculty/close" method="POST">
             <div class="row">
                 <div class="row__item">
-                    <select class="input input--select" name="faculty">
+                    <select class="input input--select" name="facultyId">
                         <option value=""><fmt:message key="chooseFaculty" bundle="${bundle}" /></option>
                         <c:forEach var="f" items="${faculties}">
                             <option value="${f.getId()}">${f.getName()}</option>
