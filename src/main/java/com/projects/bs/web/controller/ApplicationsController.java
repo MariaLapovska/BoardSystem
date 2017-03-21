@@ -40,7 +40,10 @@ public class ApplicationsController {
     @GetMapping("/add")
     public String getAddApplicationPage(Principal principal, Model model) {
         User currentUser = userService.findByLogin(principal.getName());
-        if (applicationService.findByUser(currentUser) != null) {
+        Application application = applicationService.findByUser(currentUser);
+        if (application != null && application.getStatus() == Application.Status.ACCEPTED) {
+            return "redirect:/profile";
+        } else if (application != null && application.getStatus() == Application.Status.NEW) {
             return "redirect:/application/edit";
         } else {
             model.addAttribute("action", "add");
@@ -52,8 +55,10 @@ public class ApplicationsController {
     public String getEditApplicationPage(Principal principal, Model model){
         User currentUser = userService.findByLogin(principal.getName());
         Application application = applicationService.findByUser(currentUser);
-        if (applicationService.findByUser(currentUser) == null) {
+        if (application == null || application.getStatus() == Application.Status.DECLINED) {
             return "redirect:/application/add";
+        } else if(application.getStatus() == Application.Status.ACCEPTED) {
+            return "redirect:/profile";
         } else {
             model.addAttribute("action", "edit");
             model.addAttribute("application", application);
@@ -64,8 +69,11 @@ public class ApplicationsController {
     @GetMapping("/delete")
     public String getDeleteApplicationPage(Principal principal) {
         User currentUser = userService.findByLogin(principal.getName());
-        if (applicationService.findByUser(currentUser) == null) {
+        Application application = applicationService.findByUser(currentUser);
+        if (application == null || application.getStatus() == Application.Status.DECLINED) {
             return "redirect:/application/add";
+        } else if(application.getStatus() == Application.Status.ACCEPTED) {
+            return "redirect:/profile";
         } else {
             return "/user/deleteApplication";
         }
@@ -84,7 +92,11 @@ public class ApplicationsController {
             return prepareEditApplicationPage(model);
         } else {
             Application application = applicationForm.toApplication(currentUser);
-            applicationService.saveApplication(application);
+            Application oldApplication = applicationService.findByUser(currentUser);
+            if (oldApplication != null) {
+                applicationService.delete(oldApplication.getId());
+            }
+            application = applicationService.saveApplication(application);
             String message = "changesSuccess";
             if (application == null || application.getId() == 0) {
                 message = "changesError";

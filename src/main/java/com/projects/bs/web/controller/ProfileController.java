@@ -58,30 +58,35 @@ public class ProfileController {
     private String getUserProfilePage(User user, Model model) {
         model.addAttribute("user", user);
         model.addAttribute("faculties", facultyService.findByIsAvailable(true));
-
         Application application = applicationService.findByUser(user);
         model.addAttribute("application", application);
-        if (application != null && !application.getFaculty().isAvailable()) {
-            List<Application> applications = applicationService.findByFaculty(application.getFaculty());
-            model.addAttribute("applicationNo", applications.indexOf(application));
-            model.addAttribute("totalApplicationNo", applications.size());
-        }
+        model.addAttribute("status", application.getStatus().toString());
         return "/user/profile";
     }
 
     @GetMapping("/profile/edit")
     public String getEditProfilePage(Principal principal, Model model) {
         User currentUser = userService.findByLogin(principal.getName());
-        model.addAttribute("user", currentUser);
-        model.addAttribute("editUserForm", new EditProfileDto());
-        return "/profile/editProfile";
+        Application application = applicationService.findByUser(currentUser);
+        if (application != null && application.getStatus() == Application.Status.ACCEPTED) {
+            return "redirect:/profile";
+        } else {
+            model.addAttribute("user", currentUser);
+            model.addAttribute("editUserForm", new EditProfileDto());
+            return "/profile/editProfile";
+        }
     }
 
     @GetMapping("/profile/delete")
     public String getDeleteProfilePage(Principal principal, Model model) {
         User currentUser = userService.findByLogin(principal.getName());
-        model.addAttribute("application", currentUser.getApplication());
-        return "/profile/deleteProfile";
+        Application application = applicationService.findByUser(currentUser);
+        if (application != null && application.getStatus() == Application.Status.ACCEPTED) {
+            return "redirect:/profile";
+        } else {
+            model.addAttribute("application", currentUser.getApplication());
+            return "/profile/deleteProfile";
+        }
     }
 
     @PostMapping("/profile/edit")

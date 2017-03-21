@@ -25,7 +25,7 @@
         </div>
     </c:if>
 
-    <c:if test="${not empty application && application.getFaculty().isAvailable()}">
+    <c:if test="${not empty application && status eq 'NEW'}">
         <div class="content__section">
             <div class="alert alert--success">
                 <p><fmt:message key="haveApplication" bundle="${bundle}" /></p>
@@ -41,31 +41,32 @@
         </div>
     </c:if>
     
-    <c:if test="${not empty application && not application.getFaculty().isAvailable()}">
+    <c:if test="${not empty application && status eq 'ACCEPTED'">
         <div class="content__section">
-	        <c:choose>
-			    <c:when test="${applicationNo le application.getFaculty().getRecruitmentPlan()}">
-			        <div class="alert alert--success">
-		                <fmt:message key="facultyPassed" bundle="${bundle}" /> ${application.getFaculty().getName()}.
-		                 <fmt:message key="number" bundle="${bundle}" /> ${applicationNo}. 
-		                 <fmt:message key="totalNumber" bundle="${bundle}" /> ${totalApplicationNo}
-	            	</div>
-			    </c:when>    
-			    <c:otherwise>
-			        <div class="alert alert--danger">
-		                <fmt:message key="facultyNotPassed" bundle="${bundle}" /> ${application.getFaculty().getName()}.
-		                 <fmt:message key="number" bundle="${bundle}" /> ${applicationNo}. 
-		                 <fmt:message key="totalNumber" bundle="${bundle}" /> ${totalApplicationNo}
-	            	</div>
-			    </c:otherwise>
-			</c:choose>
+	        <div class="alert alert--success">
+                <fmt:message key="facultyPassed" bundle="${bundle}" /> ${application.getFaculty().getName()}.
+            </div>
+        </div>
+    </c:if>
+
+    <c:if test="${not empty application && status eq 'DECLINED'}">
+        <div class="content__section">
+            <div class="alert alert--danger">
+                <p><fmt:message key="facultyNotPassed" bundle="${bundle}" /> ${application.getFaculty().getName()}.
+                <fmt:message key="applyAnother" bundle="${bundle}" /></p>
+                <p>
+                    <a class="button button--primary" href="${context}/application/add">
+                        <fmt:message key="createApplication" bundle="${bundle}" />
+                    </a>
+                </p>
+            </div>
         </div>
     </c:if>
     
     <div class="content__section">
         <jsp:include page="../custom/profileInfo.jsp"/>
         
-        <c:if test="${empty application || application.getFaculty().isAvailable()}">
+        <c:if test="${empty application || status ne 'ACCEPTED'}">
 	        <div class="row">
 	            <div class="row__item">
 	                <a class="button button--primary" href="${context}/profile/edit">

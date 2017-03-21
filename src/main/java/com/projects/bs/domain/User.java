@@ -42,6 +42,6 @@ public class User implements Serializable {
     private Application application;
 
     public enum Role {
-        USER, ADMIN, ACCEPTED_USER
+        USER, ADMIN
     }
 }

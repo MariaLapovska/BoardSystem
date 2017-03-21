@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -41,22 +42,12 @@ public class ApplicationDto {
     private long facultyId;
 
     @NotNull@Valid@Size(min = 3, max = 3)
-    private Map<Integer, Exam> exams;
-
-    @AssertTrue
-    private boolean isUniqueSubjects() {
-        return exams.values().stream().mapToLong(Exam::getSubjectId).distinct().count() == 0;
-    }
+    private Set<Exam> exams;
 
     public Application editApplication(Application application) {
         Faculty faculty = facultyService.findOne(facultyId);
         Map<Subject, Integer> subjectGrades = new HashMap<>();
-
-        for (Exam exam : exams.values()) {
-            Subject subject = subjectService.findOne(exam.getSubjectId());
-            subjectGrades.put(subject, exam.getGrade());
-        }
-
+        exams.forEach(exam -> subjectGrades.put(subjectService.findOne(exam.getSubjectId()), exam.getGrade()));
         application.setFaculty(faculty);
         application.setCertificateNumber(certificateNumber);
         application.setCertificateGrade(certificateGrade);
@@ -68,12 +59,8 @@ public class ApplicationDto {
     public Application toApplication(User user) {
         Faculty faculty = facultyService.findOne(facultyId);
         Map<Subject, Integer> subjectGrades = new HashMap<>();
+        exams.forEach(exam -> subjectGrades.put(subjectService.findOne(exam.getSubjectId()), exam.getGrade()));
 
-        for (Exam exam : exams.values()) {
-            Subject subject = subjectService.findOne(exam.getSubjectId());
-            subjectGrades.put(subject, exam.getGrade());
-        }
-
-        return new Application(0L, user, faculty, certificateNumber, certificateGrade, subjectGrades, 0);
+        return new Application(0L, user, faculty, certificateNumber, certificateGrade, subjectGrades, 0, Application.Status.NEW);
     }
 }

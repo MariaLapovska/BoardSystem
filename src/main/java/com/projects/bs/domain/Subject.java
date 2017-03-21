@@ -4,7 +4,6 @@ import lombok.*;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 
 @Data
 @EqualsAndHashCode(exclude = "id")
@@ -20,6 +19,5 @@ public class Subject implements Serializable {
     private long id;
 
     @Column(name = "name", nullable = false, length = 50)
-    @Pattern(regexp = "^[a-zA-Z ,.'-]{3,50}$", message = "")//TODO: error message
     private String name;
 }

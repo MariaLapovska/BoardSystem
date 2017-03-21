@@ -5,9 +5,6 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
 
 @Data
 @EqualsAndHashCode(exclude = "id")
@@ -23,11 +20,9 @@ public class Faculty implements Serializable {
     private long id;
 
     @Column(name = "name", nullable = false, length = 50)
-    @Pattern(regexp = "^[a-zA-Z ,.'-]{3,50}$", message = "")//TODO: error message
     private String name;
 
     @Column(name = "recruitment_plan", nullable = false)
-    @Min(value = 10, message = "")@Max(value = 40, message = "")//TODO: error message
     private int recruitmentPlan;
 
     @Column(name = "is_available", nullable = false)

@@ -37,9 +37,9 @@
 
 <div class="content content--form">
 	<h1 class="content__title">
-		<fmt:message key="${errorStatus}" bundle="${bundle}" var="message" />
-		<fmt:message key="${error}" bundle="${bundle}" var="default" />
-		${empty message ? default : message}
+		<fmt:message key="${errorStatus}" bundle="${bundle}" var="customMessage" />
+		<fmt:message key="${error}" bundle="${bundle}" var="defaultMessage" />
+		${empty customMessage ? defaultMessage : customMessage}
 	</h1>
 	
 	<div class="content__section">

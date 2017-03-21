@@ -7,10 +7,9 @@ import com.projects.bs.service.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -24,16 +23,16 @@ public class HomeController {
     private ApplicationService applicationService;
 
     @GetMapping("/")
-    public String getApplications(Map<String, Object> model,
+    public String getApplications(Model model,
                                   @RequestParam(value = "faculty", required = false) Long facultyId,
                                   @RequestParam(value = "search", required = false) String search,
                                   @RequestParam(value = "page", required = false) Integer page) {
-        model.put("faculties", facultyService.findAll());
+        model.addAttribute("faculties", facultyService.findAll());
 
         if (search != null && !search.isEmpty()) {
-            model.put("applications", applicationService.findByParameter(search));
-            model.put("currentPage", 1);
-            model.put("noOfPages", 1);
+            model.addAttribute("applications", applicationService.findByParameter(search));
+            model.addAttribute("currentPage", 1);
+            model.addAttribute("noOfPages", 1);
             return "index";
         }
 
@@ -43,15 +42,15 @@ public class HomeController {
         if (facultyId != null) {
             Faculty faculty = facultyService.findOne(facultyId);
             applications = applicationService.findByFaculty(faculty, page, APPLICATIONS_PER_PAGE);
-            model.put("selectedFaculty", faculty);
-            model.put("applications", applications.getContent());
+            model.addAttribute("selectedFaculty", faculty);
+            model.addAttribute("applications", applications.getContent());
         } else {
             applications = applicationService.findAll(page, APPLICATIONS_PER_PAGE);
-            model.put("applications", applications.getContent());
+            model.addAttribute("applications", applications.getContent());
         }
 
-        model.put("currentPage", page);
-        model.put("noOfPages", applications.getTotalPages());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("noOfPages", applications.getTotalPages());
 
         return "index";
     }

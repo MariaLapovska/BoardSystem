@@ -13,7 +13,14 @@
             </div>
         </div>
     </c:if>
-    
+
+    <div class="content__section">
+        <div class="alert alert--default">
+            <fmt:message key="${totalNumber}" bundle="${bundle}" /> ${total}.
+            <fmt:message key="${acceptedNumber}" bundle="${bundle}" /> ${accepted}.
+        </div>
+    </div>
+
     <div class="content__section">
         <table class="table table--stripped">
             <thead>

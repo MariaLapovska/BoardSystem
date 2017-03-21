@@ -3,9 +3,6 @@ package com.projects.bs.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -50,6 +47,14 @@ public class Application implements Serializable {
 
     @Column(name = "total_grade", nullable = false)
     private int totalGrade;
+
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public enum Status {
+        NEW, ACCEPTED, DECLINED
+    }
 
     public int getSumGrade() {
         return certificateGrade + exams.values().stream().reduce(0, Integer::sum);
