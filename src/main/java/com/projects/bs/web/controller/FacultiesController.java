@@ -12,8 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -71,7 +76,7 @@ public class FacultiesController {
                 application.setStatus(Application.Status.ACCEPTED);
                 applicationService.saveApplication(application);
             }
-            if (accepted > applications.size()) {
+            if (accepted < applications.size()) {
                 for (Application application : applications.subList(accepted, applications.size())) {
                     application.setStatus(Application.Status.DECLINED);
                     applicationService.saveApplication(application);
@@ -82,12 +87,28 @@ public class FacultiesController {
             model.addAttribute("total", applications.size());
             model.addAttribute("accepted", accepted);
         }
-        return "/admin/closeFaculty?message=" + message;
+        model.addAttribute("message", message);
+        return "/admin/closeFaculty";
     }
 
-    @GetMapping(value = "/download", produces = "")
-    public void downloadFaculty(@RequestParam(value = "faculty") long facultyId) {
+    @GetMapping(value = "/download")
+    public void downloadFaculty(@RequestParam(value = "faculty") long facultyId, HttpServletResponse response) throws IOException {
         Faculty faculty = facultyService.findOne(facultyId);
+        List<Application> applications = applicationService.findByFaculty(faculty, 1, faculty.getRecruitmentPlan()).getContent();
 
+        response.setContentType("text/csv");
+        String headerKey = "Content-Disposition";
+        String headerValue = String.format("attachment; filename=\"%s\"", "applications.csv");
+        response.setHeader(headerKey, headerValue);
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        String[] header = {"id", "Name", "Surname", "CertificateNumber", "CertificateGrade", "ExamGrades", "TotalGrade"};
+
+        csvWriter.writeHeader(header);
+
+        for (Application application : applications) {
+            csvWriter.write(application, header);
+        }
+
+        csvWriter.close();
     }
 }

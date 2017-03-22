@@ -47,6 +47,7 @@
             </div>
             <div class="row">
                 <div class="row__item">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <input class="button button--primary" type="submit" value="<fmt:message key="closeFaculty" bundle="${bundle}" />" />
                     <a class="button button--default" href="${context}/faculty/add">
                         <fmt:message key="addFaculty" bundle="${bundle}" />

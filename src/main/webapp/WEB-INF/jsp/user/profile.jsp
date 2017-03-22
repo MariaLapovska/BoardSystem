@@ -41,7 +41,7 @@
         </div>
     </c:if>
     
-    <c:if test="${not empty application && status eq 'ACCEPTED'">
+    <c:if test="${not empty application && status eq 'ACCEPTED'}">
         <div class="content__section">
 	        <div class="alert alert--success">
                 <fmt:message key="facultyPassed" bundle="${bundle}" /> ${application.getFaculty().getName()}.

@@ -31,7 +31,7 @@ public class ApplicationService {
     }
 
     public List<Application> findByFaculty(Faculty faculty) {
-        return applicationRepository.findByFaculty(faculty);
+        return applicationRepository.findByFacultyOrderByTotalGradeDesc(faculty);
     }
 
     public List<Application> findByParameter(String certificateNumber) {

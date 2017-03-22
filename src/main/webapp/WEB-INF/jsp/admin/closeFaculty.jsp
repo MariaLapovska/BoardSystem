@@ -6,18 +6,18 @@
     	<fmt:message key="facultyApplications" bundle="${bundle}" /> ${faculty.getName()}
    	</h1>
 
-    <c:if test="${not empty param.message}">
+    <c:if test="${not empty message}">
         <div class="content__section">
-            <div class="alert alert--${param.message eq 'changesSuccess' ? 'success' : 'danger'}">
-                <p><fmt:message key="${param.message}" bundle="${bundle}" /></p>
+            <div class="alert alert--${message eq 'changesSuccess' ? 'success' : 'danger'}">
+                <p><fmt:message key="${message}" bundle="${bundle}" /></p>
             </div>
         </div>
     </c:if>
 
     <div class="content__section">
         <div class="alert alert--default">
-            <fmt:message key="${totalNumber}" bundle="${bundle}" /> ${total}.
-            <fmt:message key="${acceptedNumber}" bundle="${bundle}" /> ${accepted}.
+            <fmt:message key="totalNumber" bundle="${bundle}" /> ${total}.
+            <fmt:message key="acceptedNumber" bundle="${bundle}" /> ${accepted}.
         </div>
     </div>
 

@@ -41,7 +41,7 @@
                     <input class="button button--primary" type="submit" value="<fmt:message key="addFaculty" bundle="${bundle}" />" />
                 </div>
             </div>
-        </form>
+        </form:form>
     </div>
 
 </div>

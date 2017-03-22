@@ -56,6 +56,20 @@ public class Application implements Serializable {
         NEW, ACCEPTED, DECLINED
     }
 
+    public String getName() {
+        return user.getName();
+    }
+
+    public String getSurname() {
+        return user.getSurname();
+    }
+
+    public String getExamGrades() {
+        StringBuilder stringBuilder = new StringBuilder();
+        exams.forEach(((subject, grade) -> stringBuilder.append(subject.getName() + " - " + grade + " ")));
+        return stringBuilder.toString();
+    }
+
     public int getSumGrade() {
         return certificateGrade + exams.values().stream().reduce(0, Integer::sum);
     }

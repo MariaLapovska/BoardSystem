@@ -16,7 +16,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 
     List<Application> findByCertificateNumberContaining(String certificateNumber);
 
-    List<Application> findByFaculty(Faculty faculty);
+    List<Application> findByFacultyOrderByTotalGradeDesc(Faculty faculty);
 
     Page<Application> findByFaculty(Faculty faculty, Pageable pageable);
 }

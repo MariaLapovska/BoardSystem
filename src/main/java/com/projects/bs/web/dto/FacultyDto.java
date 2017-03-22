@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -20,18 +21,23 @@ public class FacultyDto {
     @Autowired
     private SubjectService subjectService;
 
-    @Pattern(regexp = "^[a-zA-Z ,.'-]{3,50}$")
+    @NotNull@Pattern(regexp = "^[a-zA-Z ,.'-]{3,50}$")
     private String name;
 
-    @Min(10)@Max(40)
-    private int plan;
+    @NotNull@Pattern(regexp = "^[1-4][0-9]$")
+    private String plan;
 
     @NotNull@Size(min = 3, max = 3)
-    private Set<Long> subjectIds;
+    private List<Long> subjectIds;
+
+    @AssertTrue
+    private boolean isUnique() {
+        return new HashSet<>(subjectIds).size() == 3;
+    }
 
     public Faculty toFaculty() {
         Set<Subject> subjects = new HashSet<>();
         subjectIds.forEach(subjectId -> subjects.add(subjectService.findOne(subjectId)));
-        return new Faculty(0L, name, plan, true, subjects);
+        return new Faculty(0L, name, Integer.valueOf(plan), true, subjects);
     }
 }

@@ -15,8 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -35,22 +36,32 @@ public class ApplicationDto {
     @NotNull@Pattern(regexp = "^[0-9]{10}$")
     private String certificateNumber;
 
-    @NotNull@Min(100)@Max(200)
-    private int certificateGrade;
+    @NotNull@Pattern(regexp = "^[1-2][0-9]{2}$")
+    private String certificateGrade;
 
     @NotNull@Min(1)
     private long facultyId;
 
     @NotNull@Valid@Size(min = 3, max = 3)
-    private Set<Exam> exams;
+    private List<Exam> exams;
+
+    @AssertTrue
+    private boolean isUnique() {
+        return new HashSet<>(exams).size() == 3;
+    }
+
+    @AssertTrue
+    private boolean isAvailable() {
+        return facultyService.findOne(facultyId).isAvailable();
+    }
 
     public Application editApplication(Application application) {
         Faculty faculty = facultyService.findOne(facultyId);
         Map<Subject, Integer> subjectGrades = new HashMap<>();
-        exams.forEach(exam -> subjectGrades.put(subjectService.findOne(exam.getSubjectId()), exam.getGrade()));
+        exams.forEach(exam -> subjectGrades.put(subjectService.findOne(exam.getSubjectId()), Integer.valueOf(exam.getGrade())));
         application.setFaculty(faculty);
         application.setCertificateNumber(certificateNumber);
-        application.setCertificateGrade(certificateGrade);
+        application.setCertificateGrade(Integer.valueOf(certificateGrade));
         application.setExams(subjectGrades);
 
         return application;
@@ -59,8 +70,8 @@ public class ApplicationDto {
     public Application toApplication(User user) {
         Faculty faculty = facultyService.findOne(facultyId);
         Map<Subject, Integer> subjectGrades = new HashMap<>();
-        exams.forEach(exam -> subjectGrades.put(subjectService.findOne(exam.getSubjectId()), exam.getGrade()));
+        exams.forEach(exam -> subjectGrades.put(subjectService.findOne(exam.getSubjectId()), Integer.valueOf(exam.getGrade())));
 
-        return new Application(0L, user, faculty, certificateNumber, certificateGrade, subjectGrades, 0, Application.Status.NEW);
+        return new Application(0L, user, faculty, certificateNumber, Integer.valueOf(certificateGrade), subjectGrades, 0, Application.Status.NEW);
     }
 }
