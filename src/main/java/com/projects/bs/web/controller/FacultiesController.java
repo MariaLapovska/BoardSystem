@@ -83,7 +83,7 @@ public class FacultiesController {
                 }
             }
             model.addAttribute("faculty", faculty);
-            model.addAttribute("applications", applications);
+            model.addAttribute("applications", applications.subList(0, accepted));
             model.addAttribute("total", applications.size());
             model.addAttribute("accepted", accepted);
         }
@@ -100,7 +100,7 @@ public class FacultiesController {
         String headerKey = "Content-Disposition";
         String headerValue = String.format("attachment; filename=\"%s\"", "applications.csv");
         response.setHeader(headerKey, headerValue);
-        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
         String[] header = {"id", "Name", "Surname", "CertificateNumber", "CertificateGrade", "ExamGrades", "TotalGrade"};
 
         csvWriter.writeHeader(header);

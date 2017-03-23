@@ -14,10 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import static java.util.stream.Collectors.toSet;
 
 @Data
 @NoArgsConstructor
@@ -46,8 +44,10 @@ public class ApplicationDto {
     private List<Exam> exams;
 
     @AssertTrue
-    private boolean isUnique() {
-        return new HashSet<>(exams).size() == 3;
+    private boolean isCorrectSubjects() {
+        Faculty faculty = facultyService.findOne(facultyId);
+        Set<Long> expectedSubjects = faculty.getSubjects().stream().map(Subject::getId).collect(toSet());
+        return exams.stream().map(Exam::getSubjectId).collect(toSet()).equals(expectedSubjects);
     }
 
     @AssertTrue

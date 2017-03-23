@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomeController {
 
-    private static final int APPLICATIONS_PER_PAGE = 20;
+    private static final int APPLICATIONS_PER_PAGE = 10;
 
     @Autowired
     private FacultyService facultyService;

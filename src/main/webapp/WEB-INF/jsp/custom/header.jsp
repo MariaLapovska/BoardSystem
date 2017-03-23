@@ -5,16 +5,16 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<c:choose>
-	<c:when test="${empty lang}">
-		<c:set var="lang" value="${empty param.lang ? pageContext.request.locale : param.lang}" />
-	</c:when>
-	<c:otherwise>
-		<c:set var="lang" value="${empty param.lang ? lang : param.lang}" />
-	</c:otherwise>
-</c:choose>
+<%--<c:choose>--%>
+	<%--<c:when test="${empty lang}">--%>
+		<%--<c:set var="lang" value="${empty param.lang ? pageContext.request.locale : param.lang}" />--%>
+	<%--</c:when>--%>
+	<%--<c:otherwise>--%>
+		<%--<c:set var="lang" value="${empty param.lang ? lang : param.lang}" />--%>
+	<%--</c:otherwise>--%>
+<%--</c:choose>--%>
 
-<fmt:setLocale value="${lang}" />
+<fmt:setLocale value="${pageContext.request.locale}" />
 <fmt:setBundle basename="i18n/messages" var="bundle" />
 
 <!doctype html>
@@ -82,24 +82,24 @@
                 </c:choose>
             </ul>
 
-            <ul class="header__languages">
-                <li class="header__languages__item">
-                    <a class="header__languages__link ${lang eq 'en_US' ? 'header__languages__link--current' : ''}"
-                    href="${lang eq 'en_US'
-                    ? '#'
-                    : '?lang=en_US'}">
-                        ENG
-                    </a>
-                </li>
-                <li class="header__languages__item">
-                    <a class="header__languages__link ${lang eq 'ru_RU' ? 'header__languages__link--current' : ''}"
-                    href="${lang eq 'ru_RU'
-                    ? '#'
-                    : '?lang=ru_RU'}">
-                        РУС
-                    </a>
-                </li>
-            </ul>
+            <%--<ul class="header__languages">--%>
+                <%--<li class="header__languages__item">--%>
+                    <%--<a class="header__languages__link ${lang eq 'en_US' ? 'header__languages__link--current' : ''}"--%>
+                    <%--href="${lang eq 'en_US'--%>
+                    <%--? '#'--%>
+                    <%--: '?lang=en_US'}">--%>
+                        <%--ENG--%>
+                    <%--</a>--%>
+                <%--</li>--%>
+                <%--<li class="header__languages__item">--%>
+                    <%--<a class="header__languages__link ${lang eq 'ru_RU' ? 'header__languages__link--current' : ''}"--%>
+                    <%--href="${lang eq 'ru_RU'--%>
+                    <%--? '#'--%>
+                    <%--: '?lang=ru_RU'}">--%>
+                        <%--РУС--%>
+                    <%--</a>--%>
+                <%--</li>--%>
+            <%--</ul>--%>
 
         </div>
     </div>

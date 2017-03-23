@@ -4,16 +4,16 @@
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<c:choose>
-	<c:when test="${empty lang}">
-		<c:set var="lang" value="${empty param.lang ? pageContext.request.locale : param.lang}" />
-	</c:when>
-	<c:otherwise>
-		<c:set var="lang" value="${empty param.lang ? lang : param.lang}" />
-	</c:otherwise>
-</c:choose>
+<%--<c:choose>--%>
+	<%--<c:when test="${empty lang}">--%>
+		<%--<c:set var="lang" value="${empty param.lang ? pageContext.request.locale : param.lang}" />--%>
+	<%--</c:when>--%>
+	<%--<c:otherwise>--%>
+		<%--<c:set var="lang" value="${empty param.lang ? lang : param.lang}" />--%>
+	<%--</c:otherwise>--%>
+<%--</c:choose>--%>
 
-<fmt:setLocale value="${lang}" />
+<fmt:setLocale value="${pageContext.request.locale}" />
 <fmt:setBundle basename="i18n/messages" var="bundle" />
 
 <!doctype html>
@@ -38,7 +38,7 @@
 <div class="content content--form">
 	<h1 class="content__title">
 		<fmt:message key="${errorStatus}" bundle="${bundle}" var="customMessage" />
-		<fmt:message key="${error}" bundle="${bundle}" var="defaultMessage" />
+		<fmt:message key="error" bundle="${bundle}" var="defaultMessage" />
 		${empty customMessage ? defaultMessage : customMessage}
 	</h1>
 	
