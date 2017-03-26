@@ -14,7 +14,7 @@
 	<%--</c:otherwise>--%>
 <%--</c:choose>--%>
 
-<fmt:setLocale value="${pageContext.request.locale}" />
+<fmt:setLocale value="${pageContext.request.locale eq 'ru_RU' ? 'ru_RU' : 'en_US'}" />
 <fmt:setBundle basename="i18n/messages" var="bundle" />
 
 <!doctype html>
