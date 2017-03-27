@@ -124,4 +124,4 @@ INSERT INTO application_exam(application_id, exam_grade, subject_id) VALUES (14,
 INSERT INTO application_exam(application_id, exam_grade, subject_id) VALUES (14, 170, 4);
 
 DROP SEQUENCE hibernate_sequence;
-CREATE SEQUENCE hibernate_sequence start 15 increment 1;
+CREATE SEQUENCE hibernate_sequence start 20 increment 1;

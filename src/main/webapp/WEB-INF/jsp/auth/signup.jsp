@@ -14,7 +14,17 @@
         <form:form method="POST" modelAttribute="signUpForm">
             <div class="row">
                 <div class="row__item row__item--12">
+                    <i><fmt:message key="loginPattern" bundle="${bundle}"/></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row__item row__item--12">
                     <input class="input" type="text" name="login" placeholder="<fmt:message key="login" bundle="${bundle}"/>" autocomplete="off" required maxlength="20" minLength="5" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="row__item row__item--12">
+                    <i><fmt:message key="namePattern" bundle="${bundle}"/></i>
                 </div>
             </div>
             <div class="row">
@@ -25,6 +35,11 @@
             <div class="row">
                 <div class="row__item row__item--6">
                     <input class="input" type="text" name="surname" placeholder="<fmt:message key="surname" bundle="${bundle}"/>" required maxlength="25" minLength="3" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="row__item row__item--12">
+                    <i><fmt:message key="passwordPattern" bundle="${bundle}"/></i>
                 </div>
             </div>
             <div class="row">

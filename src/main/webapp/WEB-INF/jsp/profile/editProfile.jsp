@@ -18,6 +18,11 @@
                 </div>
             </div>
             <div class="row">
+                <div class="row__item row__item--12">
+                    <i><fmt:message key="namePattern" bundle="${bundle}"/></i>
+                </div>
+            </div>
+            <div class="row">
                 <div class="row__item row__item--6">
                     <input class="input" type="text" name="name" placeholder="<fmt:message key="name" bundle="${bundle}" />" value="${user.getName()}" minLength="3" maxlength="25" required />
                 </div>
@@ -28,6 +33,11 @@
             <div class="row">
                 <div class="row__item row__item--12">
                     <input class="input" type="password" name="oldPassword" placeholder="<fmt:message key="oldPassword" bundle="${bundle}" />" autocomplete="off" minLength="5" maxlength="20" required />
+                </div>
+            </div>
+            <div class="row">
+                <div class="row__item row__item--12">
+                    <i><fmt:message key="passwordPattern" bundle="${bundle}"/></i>
                 </div>
             </div>
             <div class="row">

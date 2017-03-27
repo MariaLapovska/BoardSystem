@@ -59,8 +59,10 @@ public class ProfileController {
         model.addAttribute("user", user);
         model.addAttribute("faculties", facultyService.findByIsAvailable(true));
         Application application = applicationService.findByUser(user);
-        model.addAttribute("application", application);
-        model.addAttribute("status", application.getStatus().toString());
+        if (application != null) {
+            model.addAttribute("application", application);
+            model.addAttribute("status", application.getStatus().toString());
+        }
         return "/user/profile";
     }
 

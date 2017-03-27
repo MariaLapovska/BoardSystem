@@ -16,7 +16,17 @@
         <form:form method="POST" modelAttribute="facultyForm">
             <div class="row">
                 <div class="row__item row__item--12">
+                    <i><fmt:message key="facultyPattern" bundle="${bundle}"/></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row__item row__item--12">
                     <input class="input" type="text" name="name" placeholder="<fmt:message key="name" bundle="${bundle}" />" autocomplete="off" required minLength="3" maxlength="50" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="row__item row__item--12">
+                    <i><fmt:message key="planPattern" bundle="${bundle}"/></i>
                 </div>
             </div>
             <div class="row">

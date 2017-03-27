@@ -34,6 +34,14 @@
             </div>
             <div class="row">
                 <div class="row__item row__item--6">
+                    <i><fmt:message key="certificatePattern" bundle="${bundle}"/></i>
+                </div>
+                <div class="row__item row__item--6">
+                    <i><fmt:message key="gradePattern" bundle="${bundle}"/></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row__item row__item--6">
                     <input class="input" type="text" name="certificateNumber" value="${application.getCertificateNumber()}"
                     placeholder="<fmt:message key="certificateNumber" bundle="${bundle}" />"  autocomplete="off" required minLength="10" maxlength="10" />
                 </div>
@@ -43,6 +51,11 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="row__item row__item--12">
+                    <i><fmt:message key="examsPattern" bundle="${bundle}"/></i>
+                </div>
+            </div>
             <c:choose>
                 <c:when test="${not empty application}">
                     <c:forEach var="exam" items="${application.getExams().entrySet()}" varStatus="loop" >
