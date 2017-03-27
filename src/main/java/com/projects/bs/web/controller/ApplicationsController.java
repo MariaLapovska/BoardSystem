@@ -131,14 +131,15 @@ public class ApplicationsController {
     @PostMapping("/edit")
     public String editApplication(@ModelAttribute("applicationForm") @Valid ApplicationDto applicationForm, BindingResult result, Principal principal, Model model) {
         User currentUser = userService.findByLogin(principal.getName());
-        Application application = applicationService.findByCertificate(applicationForm.getCertificateNumber());
+        Application application = applicationService.findByUser(currentUser);
+        Application newApplication = applicationService.findByCertificate(applicationForm.getCertificateNumber());
         if (result.hasErrors()) {
             model.addAttribute("error", "wrongInput");
             model.addAttribute("action", "edit");
             model.addAttribute("application", application);
             return prepareEditApplicationPage(model);
         }
-        if (application != null && application.getUser() != currentUser) {
+        if (newApplication != null && newApplication.getUser() != currentUser) {
             model.addAttribute("error", "certificateTaken");
             model.addAttribute("action", "edit");
             model.addAttribute("application", application);
