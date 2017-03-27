@@ -131,31 +131,36 @@ public class ApplicationsController {
     @PostMapping("/edit")
     public String editApplication(@ModelAttribute("applicationForm") @Valid ApplicationDto applicationForm, BindingResult result, Principal principal, Model model) {
         User currentUser = userService.findByLogin(principal.getName());
+        Application application = applicationService.findByCertificate(applicationForm.getCertificateNumber());
         if (result.hasErrors()) {
             model.addAttribute("error", "wrongInput");
             model.addAttribute("action", "edit");
+            model.addAttribute("application", application);
             return prepareEditApplicationPage(model);
         }
-        Application application = applicationService.findByCertificate(applicationForm.getCertificateNumber());
         if (application != null && application.getUser() != currentUser) {
             model.addAttribute("error", "certificateTaken");
             model.addAttribute("action", "edit");
+            model.addAttribute("application", application);
             return prepareEditApplicationPage(model);
         } else {
             Faculty faculty = facultyService.findOne(applicationForm.getFacultyId());
             if (faculty == null || !faculty.isAvailable()) {
                 model.addAttribute("error", "facultyInvalid");
                 model.addAttribute("action", "edit");
+                model.addAttribute("application", application);
                 return prepareEditApplicationPage(model);
             } else if (!isCorrectSubjects(faculty, applicationForm.getExams())) {
                 model.addAttribute("error", "examsInvalid");
                 model.addAttribute("action", "edit");
+                model.addAttribute("application", application);
                 return prepareEditApplicationPage(model);
             }
             Map <Subject, Integer> exams = toExams(applicationForm.getExams());
             if (exams == null) {
                 model.addAttribute("error", "subjectsInvalid");
                 model.addAttribute("action", "edit");
+                model.addAttribute("application", application);
                 return prepareEditApplicationPage(model);
             }
             application = applicationForm.editApplication(application, faculty, exams);
