@@ -2,11 +2,9 @@ package com.projects.bs.web.dto;
 
 import com.projects.bs.domain.Faculty;
 import com.projects.bs.domain.Subject;
-import com.projects.bs.service.SubjectService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.*;
 import java.util.HashSet;
@@ -17,9 +15,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FacultyDto {
-
-    @Autowired
-    private SubjectService subjectService;
 
     @NotNull@Pattern(regexp = "^[a-zA-Z ,.'-]{3,50}$")
     private String name;
@@ -35,9 +30,7 @@ public class FacultyDto {
         return new HashSet<>(subjectIds).size() == 3;
     }
 
-    public Faculty toFaculty() {
-        Set<Subject> subjects = new HashSet<>();
-        subjectIds.forEach(subjectId -> subjects.add(subjectService.findOne(subjectId)));
+    public Faculty toFaculty(Set<Subject> subjects) {
         return new Faculty(0L, name, Integer.valueOf(plan), true, subjects);
     }
 }

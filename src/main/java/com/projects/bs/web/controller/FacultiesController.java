@@ -2,10 +2,10 @@ package com.projects.bs.web.controller;
 
 import com.projects.bs.domain.Application;
 import com.projects.bs.domain.Faculty;
+import com.projects.bs.domain.Subject;
 import com.projects.bs.service.ApplicationService;
 import com.projects.bs.service.FacultyService;
 import com.projects.bs.service.SubjectService;
-import com.projects.bs.service.UserService;
 import com.projects.bs.web.dto.FacultyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,9 @@ import org.supercsv.prefs.CsvPreference;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/faculty")
@@ -51,7 +53,18 @@ public class FacultiesController {
             model.addAttribute("subjects", subjectService.findAll());
             return "/admin/addFaculty";
         } else {
-            Faculty faculty= facultyForm.toFaculty();
+            Set<Subject> subjects = new HashSet<>();
+            for (Long subjectId : facultyForm.getSubjectIds()) {
+                Subject subject = subjectService.findOne(subjectId);
+                if (subject == null) {
+                    model.addAttribute("error", "subjectsInvalid");
+                    model.addAttribute("subjects", subjectService.findAll());
+                    return "/admin/addFaculty";
+                } else {
+                    subjects.add(subject);
+                }
+            }
+            Faculty faculty = facultyForm.toFaculty(subjects);
             faculty = facultyService.saveFaculty(faculty);
             String message = "changesSuccess";
             if (faculty == null || faculty.getId() == 0) {
