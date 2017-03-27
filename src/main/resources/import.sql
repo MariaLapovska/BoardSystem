@@ -35,7 +35,7 @@ INSERT INTO faculty_subject(faculty_id, subject_id) VALUES (5, 10);
 INSERT INTO faculty_subject(faculty_id, subject_id) VALUES (5, 8);
 INSERT INTO faculty_subject(faculty_id, subject_id) VALUES (5, 9);
 
-INSERT INTO uuser(id, login, password, name, surname, role) VALUES (1, 'lolka', '$2a$06$SwVUZcg9GFgAtXddyxYl6uJVszIJdV0e4/RGXHu5wZO4Rz2lUTpe.', 'Ivan', 'Ivanov', 'ADMIN');
+INSERT INTO uuser(id, login, password, name, surname, role) VALUES (1, 'adminka', '$2a$06$SwVUZcg9GFgAtXddyxYl6uJVszIJdV0e4/RGXHu5wZO4Rz2lUTpe.', 'Ivan', 'Ivanov', 'ADMIN');
 
 INSERT INTO uuser(id, login, password, name, surname, role) VALUES (2, 'maria', '$2a$06$sM/AXOcuTpLmZ0Eo.YjTsuDToJ7rGkhcz3e34juC6NiSFwsJxjEea', 'Ivan', 'Ivanov', 'USER');
 INSERT INTO uuser(id, login, password, name, surname, role) VALUES (3, 'katya', '$2a$06$sM/AXOcuTpLmZ0Eo.YjTsuDToJ7rGkhcz3e34juC6NiSFwsJxjEea', 'Peter', 'Petrov', 'USER');

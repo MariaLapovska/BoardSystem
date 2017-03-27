@@ -51,7 +51,7 @@
             <div class="row">
                 <div class="row__item row__item--12">
                     <input class="button button--primary" type="submit" value="<fmt:message key="saveChanges" bundle="${bundle}" />" />
-                    <a class="button button--default" href="${context}/profile"><fmt:message key="cancel" bundle="${bundle}" /></a>    `
+                    <a class="button button--default" href="${context}/profile"><fmt:message key="cancel" bundle="${bundle}" /></a>
                 </div>
             </div>
         </form:form>
